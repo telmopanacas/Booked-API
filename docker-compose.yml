@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+
+  booked-api-db:
+    image: mysql:8.0-oracle
+    container_name: booked-api-db
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: passwordbooked
+      MYSQL_DATABASE: booked-db
+    volumes:
+      - ./db-data/booked:/var/lib/mysql
+      # Para executar um ficheiro .sql na primeira vez que a base de dados é executada, fazer o seguite:
+      # - ./caminho/para/o/ficheiro/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+      - ./db-scripts/db-init.sql:/docker-entrypoint-initdb.d/db-init.sql
+
+
+  booked-api:
+    image: booked-spring-api
+    container_name: booked-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://booked-api-db:3306/booked-db?connectTimeout=0&socketTimeout=0&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: passwordbooked
+    ports:
+      - "8094:8080"
