@@ -79,4 +79,33 @@ class LivroRepositoryTest {
         //then
         assertFalse(expected);
     }
+
+    @Test
+    void itShouldFindLivroByAutor() {
+        //given
+        Livro livro = new Livro (
+                "Drácula",
+                "Bram Stoker",
+                "978-989-52-8741-1"
+        );
+        underTest.save(livro);
+
+        //when
+        boolean expected = underTest.findByAutor(livro.getAutor()).isPresent();
+
+        //then
+        assertTrue(expected);
+    }
+
+    @Test
+    void itShouldNotFindLivroByAutor() {
+        //given
+        String titulo = "Bram Stoker";
+
+        //when
+        boolean expected = underTest.findByAutor(titulo).isPresent();
+
+        //then
+        assertFalse(expected);
+    }
 }

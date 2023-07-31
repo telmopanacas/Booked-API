@@ -31,11 +31,10 @@ public class LivroService {
     }
 
     public Livro getLivro(Long livroId) {
-        Livro livro = livroRepository.findById(livroId).orElseThrow(null);
-        if(livro == null){
-            throw new IllegalStateException("Livro com id " + livroId + " não existe");
-        }
-        return livro;
+
+        return livroRepository.findById(livroId)
+                .orElseThrow(() -> new IllegalStateException("Livro com id " + livroId + " não existe")
+        );
     }
 
     public void deleteLivro(Long livroId) {

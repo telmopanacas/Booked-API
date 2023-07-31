@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -95,12 +96,59 @@ class LivroServiceTest {
 
 
     @Test
-    @Disabled
-    void getLivro() {
+    public void canGetLivro() {
+        // given
+        Long livroId = 1L;
+        Livro expected = new Livro(
+                "Drácula",
+                "Bram Stoker",
+                "978-989-52-8741-1"
+        );
+        given(livroRepository.findById(livroId)).willReturn(Optional.of(expected));
+
+        // when
+        Livro result = underTest.getLivro(livroId);
+
+        // then
+        assertEquals(expected, result);
+        verify(livroRepository).findById(livroId);
     }
 
     @Test
-    @Disabled
-    void deleteLivro() {
+    public void willThrowWhenLivroNotFound() {
+        //given
+        Long livroId = 1L;
+        given(livroRepository.findById(livroId)).willReturn(Optional.empty());
+
+        //when
+        //then
+        assertThatThrownBy(() -> underTest.getLivro(livroId))
+                .hasMessage("Livro com id " + livroId + " não existe");
+    }
+
+
+    @Test
+    void canDeleteLivro() {
+        //given
+        Long livroId = 1L;
+        given(livroRepository.existsById(livroId)).willReturn(true);
+
+        //when
+        underTest.deleteLivro(livroId);
+
+        //then
+        verify(livroRepository).deleteById(livroId);
+    }
+
+    @Test
+    void willThrowWhenDeleteLivroNotFound() {
+        //given
+        Long livroId = 1L;
+        given(livroRepository.existsById(livroId)).willReturn(false);
+
+        //when
+        //then
+        assertThatThrownBy(() -> underTest.deleteLivro(livroId))
+                .hasMessage("Livro com id " + livroId + " não existe");
     }
 }
