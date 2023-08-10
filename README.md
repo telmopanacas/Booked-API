@@ -3,6 +3,9 @@
 # Description
 - This is a RESTful API designed for this project: [Booked](https://www.figma.com/community/file/1266829619368231584)
 
+
+- The corresponding frontend can be found here: [Booked-Frontend](https://github.com/telmopanacas/Booked-Website)
+
 # Change Log
 Guide for writing change logs.
 
