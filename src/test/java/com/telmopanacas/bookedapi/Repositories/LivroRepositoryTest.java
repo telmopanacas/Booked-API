@@ -42,7 +42,7 @@ class LivroRepositoryTest {
     @Test
     void itShouldNotFindLivroByTitulo() {
         //given
-        String titulo = "Drácula 2";
+        String titulo = "Drácula";
 
         //when
         boolean expected = underTest.findByTitulo(titulo).isPresent();

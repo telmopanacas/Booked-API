@@ -17,8 +17,9 @@ CREATE TABLE IF NOT EXISTS `livro` (
 
 CREATE TABLE IF NOT EXISTS `avaliacao` (
         `id` INT(20) NOT NULL AUTO_INCREMENT,
+        `titulo` VARCHAR(255) NOT NULL,
         `autor` VARCHAR(255) NOT NULL,
-        `avaliacao` VARCHAR(1000) NOT NULL,
+        `review` VARCHAR(1000) NOT NULL,
         `rating` TINYINT NOT NULL,
         `votos` INT(20) NOT NULL,
         `created_at` VARCHAR(255) NOT NULL,

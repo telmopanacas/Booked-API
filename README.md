@@ -16,7 +16,72 @@ Guide for writing change logs.
 
 `Fixed`  for any bug fixes.
 
-## 31/07/2023
+## 2023-08-10
+
+### Added
+- Implemented the `Avaliacao` model.
+
+
+- Added the `api/v1/avaliacao` endpoint with the following methods:
+
+    - `GET` `api/v1/avaliacao/all` - Returns a list of all reviews.
+    - `GET` `api/v1/avaliacao/{avaliacaoId}` - Returns a review by its id.
+    - `POST` `api/v1/avaliacao/new`- Creates a new review.
+    - `DELETE` `api/v1/avaliacao/{avaliacaoId}`- Deletes a review by its id.
+    - `PUT` `api/v1/avaliacao/{avaliacaoId}`- Updates a review by its id.
+
+
+- Added the following queries to the `Avaliacao` repository:
+
+    - `findByLivroTitle` - Returns a review by its book title.
+    - `findByAuthor` - Returns a review by its author.
+
+
+- Added the corresponding functions to the `Avaliacao` service.
+
+
+- Added the unit tests for the `Avaliacao` repository.
+
+
+- Added the unit tests for the `Avaliacao` service.
+
+
+- Implemented the `Comentario` model.
+
+
+- Added the `api/v1/comentario` endpoint with the following methods:
+
+    - `GET` `api/v1/comentario/all` - Returns a list of all comments.
+    - `GET` `api/v1/comentario/{comentarioId}` - Returns a comment by its id.
+    - `POST` `api/v1/comentario/new`- Creates a new comment.
+    - `DELETE` `api/v1/comentario/{comentarioId}`- Deletes a comment by its id.
+    - `PUT` `api/v1/comentario/{comentarioId}`- Updates a comment by its id.
+
+
+- Implemented the repository for  the `Comentario` model.
+
+
+- Added the corresponding functions to the `Comentario` service.
+
+
+- Added the unit tests for the `Comentario` repository.
+
+
+- Added the unit tests for the `Comentario` service.
+
+### Changed
+
+
+### Deprecated
+
+
+### Removed
+
+
+### Fixed
+
+
+## 2023-07-31
 
 ### Added
 - Implemented the `Livro` model.
@@ -35,13 +100,16 @@ Guide for writing change logs.
     - `findByTitulo` - Returns a book by its title.
     - `findByAutor` - Returns a book by its author.
     - `findByIsbn` - Returns a book by its ISBN.
-  
 
 - Added the corresponding functions to the `Livro` service.
 
 
 - Added the unit tests for the `Livro` repository.
+
+
 - Added the unit tests for the `Livro` service.
+
+
 ### Changed
 
 

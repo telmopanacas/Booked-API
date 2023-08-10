@@ -1,10 +1,12 @@
 package com.telmopanacas.bookedapi.Services;
 
+import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Livro;
 import com.telmopanacas.bookedapi.Repositories.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +20,8 @@ public class LivroService {
     }
 
 
-    public void getAllLivros() {
-        livroRepository.findAll();
+    public List<Livro> getAllLivros() {
+        return livroRepository.findAll();
     }
 
     public void addNewLivro(Livro livro) {
@@ -44,5 +46,12 @@ public class LivroService {
         }else {
             throw new IllegalStateException("Livro com id " + livroId + " não existe");
         }
+    }
+
+    public List<Avaliacao> getAllAvaliacoes(Long livroId) {
+        Livro livro = livroRepository.findById(livroId)
+                .orElseThrow(() -> new IllegalStateException("Livro com id "+ livroId + " não existe"));
+
+        return livro.getAvaliacoes();
     }
 }

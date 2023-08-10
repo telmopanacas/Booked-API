@@ -1,5 +1,6 @@
 package com.telmopanacas.bookedapi.Services;
 
+import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Livro;
 import com.telmopanacas.bookedapi.Repositories.LivroRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -150,5 +153,32 @@ class LivroServiceTest {
         //then
         assertThatThrownBy(() -> underTest.deleteLivro(livroId))
                 .hasMessage("Livro com id " + livroId + " não existe");
+    }
+
+    @Test
+    void canGetAvaliacoes() {
+        //given
+        Long livroId = 1L;
+        Livro livro = new Livro(
+                "Drácula",
+                "Bram Stoker",
+                "978-989-52-8741-1"
+        );
+        Avaliacao avaliacao = new Avaliacao(
+                "Review",
+                "Oscar Wilde",
+                "Actually pretty good storytelling",
+                5,
+                1000,
+                livro
+        );
+        livro.getAvaliacoes().add(avaliacao);
+        given(livroRepository.findById(livroId)).willReturn(Optional.of(livro));
+
+        //when
+        List<Avaliacao> result = underTest.getAllAvaliacoes(livroId);
+
+        //then
+        assertEquals(livro.getAvaliacoes(), result);
     }
 }

@@ -1,8 +1,14 @@
 package com.telmopanacas.bookedapi.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -17,24 +23,31 @@ public class Livro {
     private String isbn;
 
     @Column(name = "created_at")
-    private String dataDeRegisto;
+    @CreationTimestamp
+    private Timestamp dataDeRegisto;
+
+    @OneToMany
+    @JoinColumn(name = "livro_id")
+    @JsonIgnore
+    private List<Avaliacao> avaliacoes = new ArrayList<>();
 
     public Livro() {
     }
 
-    public Livro(long id, String titulo, String autor, String isbn, String dataDeRegisto) {
+    public Livro(long id, String titulo, String autor, String isbn, Timestamp dataDeRegisto, List<Avaliacao> avaliacoes) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.isbn = isbn;
         this.dataDeRegisto = dataDeRegisto;
+        this.avaliacoes = avaliacoes;
     }
 
-    public Livro(String titulo, String autor, String isbn, String dataDeRegisto) {
+    public Livro(String titulo, String autor, String isbn, List<Avaliacao> avaliacoes) {
         this.titulo = titulo;
         this.autor = autor;
         this.isbn = isbn;
-        this.dataDeRegisto = dataDeRegisto;
+        this.avaliacoes = avaliacoes;
     }
 
     public Livro(String titulo, String autor, String isbn) {
@@ -42,6 +55,7 @@ public class Livro {
         this.autor = autor;
         this.isbn = isbn;
     }
+
 
     public long getId() {
         return id;
@@ -75,13 +89,23 @@ public class Livro {
         this.isbn = isbn;
     }
 
-    public String getDataDeRegisto() {
+    public Timestamp getDataDeRegisto() {
         return dataDeRegisto;
     }
 
-    public void setDataDeRegisto(String dataDeRegisto) {
+    public void setDataDeRegisto(Timestamp dataDeRegisto) {
         this.dataDeRegisto = dataDeRegisto;
     }
+
+    public List<Avaliacao> getAvaliacoes() {
+        return avaliacoes;
+    }
+
+    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+        this.avaliacoes = avaliacoes;
+    }
+
+
 
     @Override
     public String toString() {
@@ -91,16 +115,7 @@ public class Livro {
                 ", autor='" + autor + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", dataDeRegisto='" + dataDeRegisto + '\'' +
+                ", avaliacoes=" + avaliacoes +
                 '}';
-    }
-
-    public Map<String, String> toJson() {
-        return Map.of(
-                "id", String.valueOf(id),
-                "titulo", titulo,
-                "autor", autor,
-                "isbn", isbn,
-                "dataDeRegisto", dataDeRegisto
-        );
     }
 }

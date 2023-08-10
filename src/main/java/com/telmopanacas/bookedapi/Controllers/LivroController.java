@@ -1,9 +1,12 @@
 package com.telmopanacas.bookedapi.Controllers;
 
+import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Livro;
 import com.telmopanacas.bookedapi.Services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/livro")
@@ -17,8 +20,8 @@ public class LivroController {
     }
 
     @GetMapping(path = "/all")
-    public void getAllLivros() {
-        livroService.getAllLivros();
+    public List<Livro> getAllLivros() {
+        return livroService.getAllLivros();
     }
 
     @PostMapping(path = "/new")
@@ -35,4 +38,7 @@ public class LivroController {
     public void deleteLivro(@PathVariable Long livroId) {
         livroService.deleteLivro(livroId);
     }
+
+    @GetMapping(path = "/{livroId}/avaliacoes/all")
+    public List<Avaliacao> getAllAvaliacoes(@PathVariable Long livroId) {return livroService.getAllAvaliacoes(livroId);}
 }
