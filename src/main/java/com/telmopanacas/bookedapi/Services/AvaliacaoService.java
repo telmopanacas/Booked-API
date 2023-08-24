@@ -1,5 +1,7 @@
 package com.telmopanacas.bookedapi.Services;
 
+import com.telmopanacas.bookedapi.DTOs.AvaliacaoDTO;
+import com.telmopanacas.bookedapi.Mappers.AvaliacaoDTOMapper;
 import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Comentario;
 import com.telmopanacas.bookedapi.Repositories.AvaliacaoRepository;
@@ -7,27 +9,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AvaliacaoService {
 
 
     private final AvaliacaoRepository avaliacaoRepository;
+    private final AvaliacaoDTOMapper avaliacaoDTOMapper;
     @Autowired
-    public AvaliacaoService(AvaliacaoRepository avaliacaoRepository) {
+    public AvaliacaoService(AvaliacaoRepository avaliacaoRepository, AvaliacaoDTOMapper avaliacaoDTOMapper) {
         this.avaliacaoRepository = avaliacaoRepository;
+        this.avaliacaoDTOMapper = avaliacaoDTOMapper;
     }
 
-    public List<Avaliacao> getAllAvaliacao() {
-        return avaliacaoRepository.findAll();
+    public List<AvaliacaoDTO> getAllAvaliacao() {
+        return avaliacaoRepository.findAll()
+                .stream()
+                .map(avaliacaoDTOMapper)
+                .collect(Collectors.toList());
     }
 
     public void addNewAvaliacao(Avaliacao avaliacao) {
         avaliacaoRepository.save(avaliacao);
     }
 
-    public Avaliacao getAvalicao(Long avaliacaoId) {
+    public AvaliacaoDTO getAvalicao(Long avaliacaoId) {
         return avaliacaoRepository.findById(avaliacaoId)
+                .map(avaliacaoDTOMapper)
                 .orElseThrow(() -> new IllegalStateException("Avaliação com id "+ avaliacaoId + " não existe"));
     }
 
