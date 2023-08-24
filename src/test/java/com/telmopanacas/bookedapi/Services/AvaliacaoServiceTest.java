@@ -1,5 +1,7 @@
 package com.telmopanacas.bookedapi.Services;
 
+import com.telmopanacas.bookedapi.DTOs.AvaliacaoDTO;
+import com.telmopanacas.bookedapi.Mappers.AvaliacaoDTOMapper;
 import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Comentario;
 import com.telmopanacas.bookedapi.Models.Livro;
@@ -12,6 +14,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +31,13 @@ class AvaliacaoServiceTest {
 
     @Mock
     private LivroRepository livroRepository;
+    private final AvaliacaoDTOMapper avaliacaoDTOMapper = new AvaliacaoDTOMapper();
 
     private AvaliacaoService underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new AvaliacaoService(avaliacaoRepository);
+        underTest = new AvaliacaoService(avaliacaoRepository, avaliacaoDTOMapper);
     }
 
     @Test
@@ -88,7 +92,7 @@ class AvaliacaoServiceTest {
         );
         livroRepository.save(livro);
         Long avaliacaoId = 1L;
-        Avaliacao expected = new Avaliacao(
+        Avaliacao avaliacao = new Avaliacao(
                 "Review",
                 "Oscar Wilde",
                 "Actually pretty good storytelling",
@@ -96,10 +100,13 @@ class AvaliacaoServiceTest {
                 1000,
                 livro
         );
-        given(avaliacaoRepository.findById(avaliacaoId)).willReturn(Optional.of(expected));
+        avaliacao.setDataDeRegisto(new Timestamp(System.currentTimeMillis()));
+        given(avaliacaoRepository.findById(avaliacaoId)).willReturn(Optional.of(avaliacao));
+
+        AvaliacaoDTO expected = avaliacaoDTOMapper.apply(avaliacao);
 
         //when
-        Avaliacao result = underTest.getAvalicao(avaliacaoId);
+        AvaliacaoDTO result = underTest.getAvalicao(avaliacaoId);
 
         //then
         assertEquals(expected, result);

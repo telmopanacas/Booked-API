@@ -1,5 +1,6 @@
 package com.telmopanacas.bookedapi.Controllers;
 
+import com.telmopanacas.bookedapi.DTOs.AvaliacaoDTO;
 import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Comentario;
 import com.telmopanacas.bookedapi.Services.AvaliacaoService;
@@ -20,7 +21,7 @@ public class AvaliacaoController {
     }
 
     @GetMapping(path = "/all")
-    public List<Avaliacao> getAllAvaliacao() {
+    public List<AvaliacaoDTO> getAllAvaliacao() {
         return avaliacaoService.getAllAvaliacao();
     }
 
@@ -30,7 +31,7 @@ public class AvaliacaoController {
     }
 
     @GetMapping(path = "/{avaliacaoId}")
-    public Avaliacao getAvaliacao(@PathVariable Long avaliacaoId) {
+    public AvaliacaoDTO getAvaliacao(@PathVariable Long avaliacaoId) {
         return avaliacaoService.getAvalicao(avaliacaoId);
     }
 

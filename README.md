@@ -19,6 +19,36 @@ Guide for writing change logs.
 
 `Fixed`  for any bug fixes.
 
+
+## 2023-08-23
+
+### Added
+- Implemented the `Avaliacao` DTO.
+
+
+- Implemented the `AvaliacaoDTO` mapper.
+
+### Changed
+- Updated the `Avaliacao` controller to use the `AvaliacaoDTO` in these endpoints:
+  - `GET` `api/v1/avaliacao/all` - Now returns a list of `AvaliacaoDTO`.
+  - `GET` `api/v1/avaliacao/{avaliacaoId}` - Now returns a `AvaliacaoDTO`.
+
+
+- Updated the `Avaliacao` service to use the `AvaliacaoDTO` mapper in these functions:
+  - `getAllAvaliacoes` - Now returns a list of `AvaliacaoDTO`.
+  - `getAvaliacaoById` - Now returns a `AvaliacaoDTO`.
+
+
+- Updated the test `canGetAvaliacao` in `AvaliacaoServiceTest.java` to use the `AvaliacaoDTO` mapper. 
+
+### Deprecated
+- N/A.
+### Removed
+- N/A.
+### Fixed
+- N/A.
+
+
 ## 2023-08-10
 
 ### Added
@@ -73,16 +103,16 @@ Guide for writing change logs.
 - Added the unit tests for the `Comentario` service.
 
 ### Changed
-
+- N/A.
 
 ### Deprecated
-
+- N/A.
 
 ### Removed
-
+- N/A.
 
 ### Fixed
-
+- N/A.
 
 ## 2023-07-31
 
@@ -114,12 +144,13 @@ Guide for writing change logs.
 
 
 ### Changed
-
+- N/A.
 
 ### Deprecated
-
+- N/A.
 
 ### Removed
-
+- N/A.
 
 ### Fixed
+- N/A.

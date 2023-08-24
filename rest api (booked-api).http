@@ -27,8 +27,8 @@ POST http://localhost:8080/api/v1/avaliacao/new
 Content-Type: application/json
 
 {
-  "titulo": "Review 3",
-  "autor": "Bram Stoker",
+  "titulo": "Review 6",
+  "autor": "Telmo",
   "review": "Good book",
   "rating": 5,
   "votos": 0,
@@ -39,7 +39,7 @@ Content-Type: application/json
 
 ###
 #Get avaliacao by id
-GET http://localhost:8080/api/v1/avaliacao/3
+GET http://localhost:8080/api/v1/avaliacao/5
 
 ###
 #Get all avaliacoes
