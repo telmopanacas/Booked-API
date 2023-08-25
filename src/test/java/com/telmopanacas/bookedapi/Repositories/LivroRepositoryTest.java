@@ -27,8 +27,7 @@ class LivroRepositoryTest {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         underTest.save(livro);
 
@@ -52,41 +51,11 @@ class LivroRepositoryTest {
     }
 
     @Test
-    void itShouldFindLivroByIsbn() {
-        //given
-        Livro livro = new Livro (
-                "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
-        );
-        underTest.save(livro);
-
-        //when
-        boolean expected = underTest.findByIsbn(livro.getIsbn()).isPresent();
-
-        //then
-        assertTrue(expected);
-    }
-
-    @Test
-    void itShouldNotFindLivroByIsbn() {
-        //given
-        String titulo = "978-989-52-8741-1";
-
-        //when
-        boolean expected = underTest.findByIsbn(titulo).isPresent();
-
-        //then
-        assertFalse(expected);
-    }
-
-    @Test
     void itShouldFindLivroByAutor() {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         underTest.save(livro);
 

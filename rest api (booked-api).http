@@ -12,9 +12,8 @@ POST http://localhost:8080/api/v1/livro/new
 Content-Type: application/json
 
 {
-  "titulo": "Drácula",
-  "autor": "Bram Stoker",
-  "isbn": "978-989-52-8741-1"
+  "titulo": "O Livro do Desassossego",
+  "autor": "Fernando Pessoa"
 }
 
 ###

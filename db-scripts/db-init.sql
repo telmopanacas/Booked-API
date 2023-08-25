@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS `livro` (
         `id` INT(20) AUTO_INCREMENT,
         `titulo` VARCHAR(255) NOT NULL,
         `autor` VARCHAR(70) NOT NULL,
-        `isbn` VARCHAR(255) NOT NULL,
         `created_at` VARCHAR(255) NOT NULL,
         PRIMARY KEY (`id`)
 );

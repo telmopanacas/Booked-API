@@ -47,8 +47,7 @@ class ComentarioServiceTest {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         Avaliacao avaliacao = new Avaliacao(
                 "Review",
@@ -85,8 +84,7 @@ class ComentarioServiceTest {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         Avaliacao avaliacao = new Avaliacao(
                 "Review",
@@ -161,8 +159,7 @@ class ComentarioServiceTest {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         Avaliacao avaliacao = new Avaliacao(
                 "Review",

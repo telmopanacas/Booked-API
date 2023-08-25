@@ -56,8 +56,7 @@ class LivroServiceTest {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
 
         //when
@@ -76,36 +75,12 @@ class LivroServiceTest {
     }
 
     @Test
-    void willThrowWhenIsbnExists() {
-        //given
-        Livro livro = new Livro(
-                "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
-        );
-
-        // Simulando que o livro com o mesmo ISBN já existe no repositório
-        given(livroRepository.findByIsbn(livro.getIsbn()))
-                .willReturn(Optional.of(livro));
-
-        //when
-        //then
-        assertThatThrownBy(() -> underTest.addNewLivro(livro))
-                .hasMessage("Livro com ISBN " + livro.getIsbn() + " já se encontra registado");
-
-        // Confirma que o método save nunca foi chamado
-        verify(livroRepository, never()).save(any());
-    }
-
-
-    @Test
     public void canGetLivro() {
         // given
         Long livroId = 1L;
         Livro expected = new Livro(
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         given(livroRepository.findById(livroId)).willReturn(Optional.of(expected));
 
@@ -161,8 +136,7 @@ class LivroServiceTest {
         Long livroId = 1L;
         Livro livro = new Livro(
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         Avaliacao avaliacao = new Avaliacao(
                 "Review",
