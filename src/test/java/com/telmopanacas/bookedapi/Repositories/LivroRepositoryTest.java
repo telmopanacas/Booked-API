@@ -77,4 +77,33 @@ class LivroRepositoryTest {
         //then
         assertFalse(expected);
     }
+
+    @Test
+    void itShouldFindLivroByTituloEAutor() {
+        //given
+        Livro livro = new Livro(
+                "Drácula",
+                "Bram Stoker"
+        );
+        underTest.save(livro);
+
+        //when
+        boolean expected = underTest.findByTituloAndAutor(livro.getTitulo(), livro.getAutor()).isPresent();
+
+        //then
+        assertTrue(expected);
+    }
+
+    @Test
+    void itShouldNotFindLivroByTituloEAutor() {
+        //given
+        String titulo = "Drácula";
+        String autor = "Bram Stoker";
+
+        //when
+        boolean expected = underTest.findByTituloAndAutor(titulo, autor).isPresent();
+
+        //then
+        assertFalse(expected);
+    }
 }

@@ -23,8 +23,13 @@ Guide for writing change logs.
 ## 2023-08-25
 
 ### Added
-- N/A.
+- Added the endpoint `api/v1/livro/find` which receives the parameters `titulo` and `autor` and the book that match the parameters. 
 
+
+- Added the corresponding function to the `Livro` service.
+
+
+- Added the unit test for the `Livro` service.
 ### Changed
 - Changed the `Livro` Entity where the property ISBN was removed since there was no need for it yet.
 

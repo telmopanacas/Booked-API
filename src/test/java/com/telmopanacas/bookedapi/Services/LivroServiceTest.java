@@ -155,4 +155,32 @@ class LivroServiceTest {
         //then
         assertEquals(livro.getAvaliacoes(), result);
     }
+
+    @Test
+    void canFindLivroByTituloEAutor() {
+        //given
+        Long livroId = 1L;
+        Livro livro = new Livro(
+                "Drácula",
+                "Bram Stoker"
+        );
+        given(livroRepository.findByTituloAndAutor("Drácula", "Bram Stoker")).willReturn(Optional.of(livro));
+
+        //when
+        Livro result = underTest.findLivroByTitleAndAuthor("Drácula", "Bram Stoker");
+
+        //then
+        assertEquals(livro, result);
+    }
+
+    @Test
+    void willThrowWhenFindLivroByTituloEAutor() {
+        //given
+        given(livroRepository.findByTituloAndAutor("Drácula", "Bram Stoker")).willReturn(Optional.empty());
+
+        //then
+        //when
+        assertThatThrownBy(() -> underTest.findLivroByTitleAndAuthor("Drácula", "Bram Stoker"))
+                .hasMessage("Livro com titulo Drácula e autor Bram Stoker não existe");
+    }
 }
