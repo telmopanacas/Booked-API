@@ -54,4 +54,10 @@ public class LivroService {
 
         return livro.getAvaliacoes();
     }
+
+    public Livro findLivroByTitleAndAuthor(String titulo, String autor) {
+
+        return livroRepository.findByTituloAndAutor(titulo, autor).
+                orElseThrow(() -> new IllegalStateException("Livro com titulo " + titulo + " e autor " + autor + " não existe"));
+    }
 }

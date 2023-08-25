@@ -4,6 +4,7 @@ import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Livro;
 import com.telmopanacas.bookedapi.Services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class LivroController {
     }
 
     @GetMapping(path = "/{livroId}")
-    public Livro getLivro(@PathVariable Long livroId) {
+    public Livro getLivroById(@PathVariable Long livroId) {
         return livroService.getLivro(livroId);
     }
 
@@ -41,4 +42,12 @@ public class LivroController {
 
     @GetMapping(path = "/{livroId}/avaliacoes/all")
     public List<Avaliacao> getAllAvaliacoes(@PathVariable Long livroId) {return livroService.getAllAvaliacoes(livroId);}
+
+    @GetMapping(path = "/find")
+    public ResponseEntity<Livro> findLivroByTitleAndAuthor(
+            @RequestParam("titulo") String titulo,
+            @RequestParam("autor") String autor
+    ) {
+        return ResponseEntity.ok(livroService.findLivroByTitleAndAuthor(titulo, autor));
+    }
 }
