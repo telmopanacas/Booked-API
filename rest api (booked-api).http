@@ -27,10 +27,10 @@ POST http://localhost:8080/api/v1/avaliacao/new
 Content-Type: application/json
 
 {
-  "titulo": "Review 6",
+  "titulo": "Review 7",
   "autor": "Telmo",
-  "review": "Good book",
-  "rating": 5,
+  "review": "Meh book",
+  "rating": 3,
   "votos": 0,
   "livro": {
     "id": 1

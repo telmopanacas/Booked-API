@@ -56,7 +56,6 @@ public class Livro {
         this.isbn = isbn;
     }
 
-
     public long getId() {
         return id;
     }
