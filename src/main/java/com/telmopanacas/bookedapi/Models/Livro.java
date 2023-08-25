@@ -20,7 +20,6 @@ public class Livro {
     private long id;
     private String titulo;
     private String autor;
-    private String isbn;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -34,26 +33,23 @@ public class Livro {
     public Livro() {
     }
 
-    public Livro(long id, String titulo, String autor, String isbn, Timestamp dataDeRegisto, List<Avaliacao> avaliacoes) {
+    public Livro(long id, String titulo, String autor, Timestamp dataDeRegisto, List<Avaliacao> avaliacoes) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
-        this.isbn = isbn;
         this.dataDeRegisto = dataDeRegisto;
         this.avaliacoes = avaliacoes;
     }
 
-    public Livro(String titulo, String autor, String isbn, List<Avaliacao> avaliacoes) {
+    public Livro(String titulo, String autor, List<Avaliacao> avaliacoes) {
         this.titulo = titulo;
         this.autor = autor;
-        this.isbn = isbn;
         this.avaliacoes = avaliacoes;
     }
 
-    public Livro(String titulo, String autor, String isbn) {
+    public Livro(String titulo, String autor) {
         this.titulo = titulo;
         this.autor = autor;
-        this.isbn = isbn;
     }
 
     public long getId() {
@@ -80,14 +76,6 @@ public class Livro {
         this.autor = autor;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
     public Timestamp getDataDeRegisto() {
         return dataDeRegisto;
     }
@@ -112,7 +100,6 @@ public class Livro {
                 "id=" + id +
                 ", titulo='" + titulo + '\'' +
                 ", autor='" + autor + '\'' +
-                ", isbn='" + isbn + '\'' +
                 ", dataDeRegisto='" + dataDeRegisto + '\'' +
                 ", avaliacoes=" + avaliacoes +
                 '}';

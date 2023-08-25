@@ -25,9 +25,9 @@ public class LivroService {
     }
 
     public void addNewLivro(Livro livro) {
-        Optional<Livro> livroOptional = livroRepository.findByIsbn(livro.getIsbn());
+        Optional<Livro> livroOptional = livroRepository.findByTituloAndAutor(livro.getTitulo(), livro.getAutor());
         if(livroOptional.isPresent()) {
-            throw new IllegalStateException("Livro com ISBN " + livro.getIsbn() + " já se encontra registado");
+            throw new IllegalStateException("Livro com titulo " + livro.getTitulo() + " e autor " + livro.getAutor() + " já existe");
         }
         livroRepository.save(livro);
     }

@@ -29,8 +29,7 @@ class AvaliacaoRepositoryTest {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         livroRepository.save(livro);
         Avaliacao avaliacao = new Avaliacao(
@@ -67,8 +66,7 @@ class AvaliacaoRepositoryTest {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         livroRepository.save(livro);
         Avaliacao avaliacao = new Avaliacao(

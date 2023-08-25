@@ -20,6 +20,33 @@ Guide for writing change logs.
 `Fixed`  for any bug fixes.
 
 
+## 2023-08-25
+
+### Added
+- N/A.
+
+### Changed
+- Changed the `Livro` Entity where the property ISBN was removed since there was no need for it yet.
+
+
+- Changed the `LivroService` functions to reflect the change in the Livro Entity.
+
+
+- Changed the `db_init.sql` file to reflect the change in the Livro Entity.
+
+
+- Changed the tests to reflect the change in the Livro Entity.
+
+### Deprecated
+- N/A.
+
+### Removed
+- Removed the `isbn` property from the `Livro` Entity.
+
+### Fixed
+- N/A.
+
+
 ## 2023-08-23
 
 ### Added

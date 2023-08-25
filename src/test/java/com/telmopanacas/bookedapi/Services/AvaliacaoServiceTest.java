@@ -54,8 +54,7 @@ class AvaliacaoServiceTest {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         livroRepository.save(livro);
         Avaliacao avaliacao = new Avaliacao(
@@ -87,8 +86,7 @@ class AvaliacaoServiceTest {
         //given
         Livro livro = new Livro (
                 "Review",
-                "Drácula",
-                "Bram Stoker"
+                "Drácula"
         );
         livroRepository.save(livro);
         Long avaliacaoId = 1L;
@@ -161,8 +159,7 @@ class AvaliacaoServiceTest {
         //given
         Livro livro = new Livro (
                 "Drácula",
-                "Bram Stocker",
-                "978-989-52-8741-1"
+                "Bram Stocker"
         );
         livroRepository.save(livro);
         Long avaliacaoId = 1L;
@@ -211,8 +208,7 @@ class AvaliacaoServiceTest {
         //given
         Livro livro = new Livro(
                 "Drácula",
-                "Bram Stoker",
-                "978-989-52-8741-1"
+                "Bram Stoker"
         );
         Avaliacao avaliacao = new Avaliacao(
                 "Review",

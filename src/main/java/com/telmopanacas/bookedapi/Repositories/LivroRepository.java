@@ -14,9 +14,9 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
     @Query("SELECT livro FROM Livro livro WHERE livro.titulo = ?1")
     Optional<Livro> findByTitulo(String titulo);
 
-    @Query("SELECT livro FROM Livro livro WHERE livro.isbn = ?1")
-    Optional<Livro> findByIsbn(String isbn);
-
     @Query("SELECT livro FROM Livro livro WHERE livro.autor = ?1")
     Optional<Livro> findByAutor(String autor);
+
+    @Query("SELECT livro FROM Livro livro WHERE livro.titulo = ?1 AND livro.autor = ?2")
+    Optional<Livro> findByTituloAndAutor(String titulo, String autor);
 }
