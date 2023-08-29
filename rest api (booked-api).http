@@ -21,6 +21,9 @@ Content-Type: application/json
 GET http://localhost:8080/api/v1/livro/1
 
 ###
+#Delete book by id
+DELETE http://localhost:8080/api/v1/livro/12
+###
 #Find book by title and author
 GET http://localhost:8080/api/v1/livro/find?titulo=Drácula&autor=Bram Stoker
 

@@ -20,6 +20,28 @@ Guide for writing change logs.
 `Fixed`  for any bug fixes.
 
 
+## 2023-08-29
+
+### Added
+- N/A.
+
+### Changed
+- Changed the endpoint `api/v1/livro/new` so after the book is created it returns it in the response.
+
+
+- Changed the relation between `Livro` and `Avaliacao` so that when a book is deleted all its reviews are deleted as well.
+
+
+### Deprecated
+- N/A.
+
+### Removed
+- N/A.
+
+### Fixed
+- N/A.
+
+
 ## 2023-08-25
 
 ### Added
