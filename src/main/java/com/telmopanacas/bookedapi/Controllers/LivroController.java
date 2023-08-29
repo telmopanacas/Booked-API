@@ -26,8 +26,9 @@ public class LivroController {
     }
 
     @PostMapping(path = "/new")
-    public void registerNewLivro(@RequestBody Livro livro) {
+    public Livro registerNewLivro(@RequestBody Livro livro) {
         livroService.addNewLivro(livro);
+        return livroService.findLivroByTitleAndAuthor(livro.getTitulo(), livro.getAutor());
     }
 
     @GetMapping(path = "/{livroId}")

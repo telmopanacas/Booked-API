@@ -25,7 +25,7 @@ public class Livro {
     @CreationTimestamp
     private Timestamp dataDeRegisto;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "livro_id")
     @JsonIgnore
     private List<Avaliacao> avaliacoes = new ArrayList<>();
