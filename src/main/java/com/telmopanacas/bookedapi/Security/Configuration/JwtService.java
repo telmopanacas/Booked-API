@@ -38,22 +38,32 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(
+    public String buildToken(
             Map<String, Object> extraClaims,
-            UserDetails userDetails
+            UserDetails userDetails,
+            Long expirationTime
     ) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) // 24 horas + 1000 milisegndos
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+    public String generateToken(
+            Map<String, Object> extraClaims,
+            UserDetails userDetails
+    ) {
+        return buildToken(extraClaims, userDetails, (long) (24 * 60 * 60 * 1000)); // 24h 24 * 60 * 60 * 1000
     }
 
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
+    }
+    public String generateRefreshToken(UserDetails userDetails) {
+        return buildToken(new HashMap<>(), userDetails, (long) (7 * 24 * 60 * 60 * 1000)); //7 dias 7 * 24 * 60 * 60 * 1000
     }
 
     private Date extractExpiration(String token) {
