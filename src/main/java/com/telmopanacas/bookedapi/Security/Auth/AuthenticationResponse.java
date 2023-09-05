@@ -1,27 +1,30 @@
 package com.telmopanacas.bookedapi.Security.Auth;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AuthenticationResponse {
-    private Integer userId;
-    private String token;
+    @JsonProperty("access_token")
+    private String accessToken;
+    @JsonProperty("refresh_token")
+    private String refreshToken;
 
-    public AuthenticationResponse(Integer userId, String token) {
-        this.userId = userId;
-        this.token = token;
+    public AuthenticationResponse(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
