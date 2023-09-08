@@ -5,6 +5,7 @@ import com.telmopanacas.bookedapi.Security.Configuration.JwtService;
 import com.telmopanacas.bookedapi.Security.User.Role;
 import com.telmopanacas.bookedapi.Security.User.User;
 import com.telmopanacas.bookedapi.Security.User.UserRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,7 +42,7 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwtToken, refreshToken);
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -55,20 +56,35 @@ public class AuthenticationService {
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
+
+        Cookie cookie = new Cookie("refresh_token", refreshToken);
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(604800); // 7 days in seconds
+        cookie.setSecure(true);
+        response.addCookie(cookie);
+
         return new AuthenticationResponse(jwtToken, refreshToken);
+    }
+
+    public void logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("refresh_token", null);
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+        cookie.setSecure(true);
+        response.addCookie(cookie);
     }
 
     public void refreshToken(
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        final String authHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader("Cookie");
         final String refreshToken;
         final String userEmail;
-        if( authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return;
+        if( authHeader == null || !authHeader.startsWith("refresh_token=")) {
+            throw new IOException("No Cookie found");
         }
-        refreshToken = authHeader.substring(7);
+        refreshToken = authHeader.substring(14);
         userEmail = jwtService.extractUsername(refreshToken);
 
         // Vamos ver se o userEmail não é null e se o utilizador já se encontra autenticado ou não

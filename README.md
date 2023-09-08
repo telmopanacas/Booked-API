@@ -19,6 +19,36 @@ Guide for writing change logs.
 
 `Fixed`  for any bug fixes.
 
+## 2023-09-08
+
+### Added
+
+
+### Changed
+- Changed the property `spring.jpa.show-sql` to `false` in the `application.properties` file.
+
+
+- Changed the property `refreshToken` in the `AuthenticationResponse` to be ignored by the JSON parser.
+
+
+- In the `AuthenticationController` changed the `refreshToken` to be set as a cookie in the authentication endpoint only.
+
+
+- In the `AuthenticationController` added the endpoint `api/v1/auth/logout` which deletes the refresh token cookie.
+
+
+- in the `AuthenticationService` changed the `authenticate` function to set the `refreshToken` as a cookie in the response.
+
+
+- in the `SecurityConfiguration` added a `CorsConfigurationSource` bean to allow CORS requests from the frontend.
+
+### Deprecated
+
+
+### Removed
+- Removed the `WebMvcConfigurer` bean in the `BookedApiApplication` class.
+
+### Fixed
 
 ## 2023-08-29
 
