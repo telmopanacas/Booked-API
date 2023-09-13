@@ -32,11 +32,18 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response) {
         User user = new User(request.getDisplayName(), request.getEmail(), passwordEncoder.encode(request.getPassword()), Role.USER);
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
+
+        Cookie cookie = new Cookie("refresh_token", refreshToken);
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(604800); // 7 days in seconds
+        cookie.setSecure(true);
+        response.addCookie(cookie);
+
         return new AuthenticationResponse(jwtToken, refreshToken);
     }
 
