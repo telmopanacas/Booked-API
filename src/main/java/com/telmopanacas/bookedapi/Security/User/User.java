@@ -1,9 +1,12 @@
 package com.telmopanacas.bookedapi.Security.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.telmopanacas.bookedapi.Models.Avaliacao;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,12 +22,18 @@ public class User  implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User(Integer id, String displayName, String email, String password, Role role) {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private List<Avaliacao> avaliacoes = new ArrayList<>();
+
+    public User(Integer id, String displayName, String email, String password, Role role, List<Avaliacao> avaliacoes) {
         this.id = id;
         this.displayName = displayName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.avaliacoes = avaliacoes;
     }
 
     public User(String displayName, String email, String password, Role role) {
@@ -75,6 +84,14 @@ public class User  implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Avaliacao> getAvaliacoes() {
+        return avaliacoes;
+    }
+
+    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+        this.avaliacoes = avaliacoes;
     }
 
     @Override

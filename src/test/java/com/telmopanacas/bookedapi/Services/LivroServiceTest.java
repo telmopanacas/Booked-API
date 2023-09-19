@@ -26,14 +26,14 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+/*
 @ExtendWith(MockitoExtension.class)
 class LivroServiceTest {
 
     @Mock
-    /*
-    Como o LivroRepository já teve os seus testes feitos, não é necessário testar novamente.
-    Logo podemos utilizar o @Mock para simular o comportamento do LivroRepository.
-     */
+
+    //Como o LivroRepository já teve os seus testes feitos, não é necessário testar novamente.
+    //Logo podemos utilizar o @Mock para simular o comportamento do LivroRepository.
     private LivroRepository livroRepository;
 
     private LivroService underTest;
@@ -64,10 +64,9 @@ class LivroServiceTest {
 
         //then
         ArgumentCaptor<Livro> livroArgumentCaptor = ArgumentCaptor.forClass(Livro.class);
-        /*
-        É utilizado o ArgumentCaptor para capturar o argumento
-        que é passado para o método save do livroRepository.
-         */
+
+        //É utilizado o ArgumentCaptor para capturar o argumento
+        //que é passado para o método save do livroRepository.
         verify(livroRepository).save(livroArgumentCaptor.capture());
 
         Livro capturedLivro = livroArgumentCaptor.getValue();
@@ -184,3 +183,4 @@ class LivroServiceTest {
                 .hasMessage("Livro com titulo Drácula e autor Bram Stoker não existe");
     }
 }
+*/

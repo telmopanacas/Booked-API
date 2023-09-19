@@ -1,6 +1,7 @@
 package com.telmopanacas.bookedapi.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.telmopanacas.bookedapi.Security.User.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,7 +19,6 @@ public class Avaliacao {
     )
     private int id;
     private String titulo;
-    private String autor;
     private String review;
     private int rating;
     private int votos;
@@ -29,33 +29,37 @@ public class Avaliacao {
     @JoinColumn(name = "livro_id")
     private Livro livro;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "avaliacao_id")
     @JsonIgnore
     private List<Comentario> comentarios = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Avaliacao() {
     }
 
-    public Avaliacao(int id, String titulo, String autor, String review, int rating, int votos, Timestamp dataDeRegisto, Livro livro, List<Comentario> comentarios) {
+    public Avaliacao(int id, String titulo, String review, int rating, int votos, Timestamp dataDeRegisto, Livro livro, List<Comentario> comentarios, User user) {
         this.id = id;
         this.titulo = titulo;
-        this.autor = autor;
         this.review = review;
         this.rating = rating;
         this.votos = votos;
         this.dataDeRegisto = dataDeRegisto;
         this.livro = livro;
         this.comentarios = comentarios;
+        this.user = user;
     }
 
-    public Avaliacao(String titulo, String autor, String review, int rating, int votos, Livro livro) {
+    public Avaliacao(String titulo, String review, int rating, int votos, Livro livro, User user) {
         this.titulo = titulo;
-        this.autor = autor;
         this.review = review;
         this.rating = rating;
         this.votos = votos;
         this.livro = livro;
+        this.user = user;
     }
 
 
@@ -73,14 +77,6 @@ public class Avaliacao {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public String getAutor() {
-        return autor;
-    }
-
-    public void setAutor(String autor) {
-        this.autor = autor;
     }
 
     public String getReview() {
@@ -131,17 +127,26 @@ public class Avaliacao {
         this.comentarios = comentarios;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Avaliacao{" +
                 "id=" + id +
                 ", titulo='" + titulo + '\'' +
-                ", autor='" + autor + '\'' +
                 ", review='" + review + '\'' +
                 ", rating=" + rating +
                 ", votos=" + votos +
-                ", dataDeRegisto='" + dataDeRegisto + '\'' +
-                ", livro=" + livro.getId() +
+                ", dataDeRegisto=" + dataDeRegisto +
+                ", livro=" + livro +
+                ", comentarios=" + comentarios +
+                ", user=" + user +
                 '}';
     }
 }

@@ -16,8 +16,4 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long>{
     )
     Optional<Avaliacao> findByLivroTitle(String livroTitle);
 
-    @Query(
-            "SELECT avaliacao FROM Avaliacao avaliacao WHERE avaliacao.autor = ?1"
-    )
-    Optional<Avaliacao> findByAuthor(String author);
 }

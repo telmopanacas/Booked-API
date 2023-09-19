@@ -38,10 +38,11 @@ public class AvaliacaoDTOMapper implements Function<Avaliacao, AvaliacaoDTO> {
         String[] hora = dataHoraOriginal[1].split(":");
         String horaFormatada = hora[0] + ":" + hora[1];
 
+
         return new AvaliacaoDTO(
                 avaliacao.getId(),
                 avaliacao.getTitulo(),
-                avaliacao.getAutor(),
+                avaliacao.getUser().getDisplayName(),
                 avaliacao.getReview(),
                 avaliacao.getRating(),
                 dataFormatada,

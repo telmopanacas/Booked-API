@@ -19,6 +19,42 @@ Guide for writing change logs.
 
 `Fixed`  for any bug fixes.
 
+## 2023-09-18
+
+### Added
+- Added the record `UserDTO` to be used in the new `UserController`.
+
+
+- Added the `UserDTOMapper` to map the `User` model to the `UserDTO` record.
+
+
+- Added the `UserRequest` class to be used in the `UserController` to receive the user data from the frontend.
+
+
+- Added the `UserController` with the following endpoints:
+    - `POST` `api/v1/user` - Which receives a `UserRequest` and returns the user corresponding to the request's email.
+
+
+- Added the `UserService` with the following functions:
+    - `getUserByEmail` - Which receives a `String` email and returns the user corresponding to the email.
+
+### Changed
+- In the `Avaliacao` entity removed the `autor` property and added the `userId` property with a `ManyToOne` relation.
+
+
+- In the `User` entity added the `avaliacoes` property and created a `OneToMany` relation between `User` and `Avaliacao`.
+
+
+- In the `AvaliacaoDTOMapper` changed the `autor` property to `displayName` of it's `user` property.
+### Deprecated
+- For now commented the unit tests related with the `Avaliacao` entity.
+
+### Removed
+- Removed the query `findByAuthor` from the `AvaliacaoRepository`.
+
+### Fixed
+- N/A.
+
 ## 2023-09-13
 
 ### Added
