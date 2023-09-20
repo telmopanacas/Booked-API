@@ -8,6 +8,8 @@ import com.telmopanacas.bookedapi.Security.User.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +35,10 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new IllegalStateException("Email já se encontra em uso.");
+        }
+
         User user = new User(request.getDisplayName(), request.getEmail(), passwordEncoder.encode(request.getPassword()), Role.USER);
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
