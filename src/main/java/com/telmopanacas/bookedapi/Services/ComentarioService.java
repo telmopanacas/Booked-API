@@ -1,5 +1,6 @@
 package com.telmopanacas.bookedapi.Services;
 
+import com.telmopanacas.bookedapi.Exceptions.ApiRequestException;
 import com.telmopanacas.bookedapi.Models.Comentario;
 import com.telmopanacas.bookedapi.Repositories.ComentarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ComentarioService {
     public Comentario getComentario(Long comentarioId) {
 
         return comentarioRepository.findById(comentarioId)
-                .orElseThrow(() -> new IllegalStateException("Comentário com id "+ comentarioId + " não existe"));
+                .orElseThrow(() -> new ApiRequestException("Comment with id "+ comentarioId + " doesn't exist."));
     }
 
     public void deleteComentario(Long comentarioId) {
@@ -37,13 +38,13 @@ public class ComentarioService {
         if(exists) {
             comentarioRepository.deleteById(comentarioId);
         } else {
-            throw new IllegalStateException("Comentário com id "+ comentarioId + " não existe");
+            throw new ApiRequestException("Comment with id "+ comentarioId + " doesn't exist.");
         }
     }
 
     public void updateComentario(Long comentarioId, String mensagem, int votos) {
         Comentario comentario = comentarioRepository.findById(comentarioId)
-                .orElseThrow(() -> new IllegalStateException("Comentário com id "+ comentarioId + " não existe"));
+                .orElseThrow(() -> new ApiRequestException("Comment with id "+ comentarioId + " doesn't exist."));
 
         if(mensagem != null && !mensagem.isEmpty() && !comentario.getMensagem().equals(mensagem)) {
             comentario.setMensagem(mensagem);
