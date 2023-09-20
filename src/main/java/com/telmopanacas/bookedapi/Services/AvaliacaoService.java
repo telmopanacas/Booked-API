@@ -1,6 +1,7 @@
 package com.telmopanacas.bookedapi.Services;
 
 import com.telmopanacas.bookedapi.DTOs.AvaliacaoDTO;
+import com.telmopanacas.bookedapi.Exceptions.ApiRequestException;
 import com.telmopanacas.bookedapi.Mappers.AvaliacaoDTOMapper;
 import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Comentario;
@@ -37,7 +38,7 @@ public class AvaliacaoService {
     public AvaliacaoDTO getAvalicao(Long avaliacaoId) {
         return avaliacaoRepository.findById(avaliacaoId)
                 .map(avaliacaoDTOMapper)
-                .orElseThrow(() -> new IllegalStateException("Avaliação com id "+ avaliacaoId + " não existe"));
+                .orElseThrow(() -> new ApiRequestException("Review with id "+ avaliacaoId + " doesn't exist."));
     }
 
     public void deleteAvaliacao(Long avaliacaoId) {
@@ -45,19 +46,19 @@ public class AvaliacaoService {
         if (exists) {
             avaliacaoRepository.deleteById(avaliacaoId);
         }else {
-            throw  new IllegalStateException("Avaliação com id "+ avaliacaoId + " não existe");
+            throw  new ApiRequestException("Review with id "+ avaliacaoId + " doesn't exist.");
         }
     }
 
     public void updateAvaliacao(Long avaliacaoId, String titulo, String review, int rating, int votos) {
         Avaliacao avaliacao = avaliacaoRepository.findById(avaliacaoId)
-                .orElseThrow(() -> new IllegalStateException("Avaliação com id "+ avaliacaoId + " não existe"));
+                .orElseThrow(() -> new ApiRequestException("Review with id "+ avaliacaoId + " doesn't exist."));
 
-        if(titulo != null && titulo.length() > 0 && !avaliacao.getTitulo().equals(titulo)) {
+        if(titulo != null && !titulo.isEmpty() && !avaliacao.getTitulo().equals(titulo)) {
             avaliacao.setTitulo(titulo);
         }
 
-        if(review != null && review.length() > 0 && !avaliacao.getReview().equals(review)) {
+        if(review != null && !review.isEmpty() && !avaliacao.getReview().equals(review)) {
             avaliacao.setReview(review);
         }
 
@@ -74,7 +75,7 @@ public class AvaliacaoService {
 
     public List<Comentario> getAllComentarios(Long avaliacaoId) {
         Avaliacao avaliacao = avaliacaoRepository.findById(avaliacaoId)
-                .orElseThrow(() -> new IllegalStateException("Avaliação com id "+ avaliacaoId + " não existe"));
+                .orElseThrow(() -> new ApiRequestException("Review with id "+ avaliacaoId + " doesn't exist."));
 
         return avaliacao.getComentarios();
     }

@@ -1,6 +1,7 @@
 package com.telmopanacas.bookedapi.Security.Auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.telmopanacas.bookedapi.Exceptions.ApiRequestException;
 import com.telmopanacas.bookedapi.Security.Configuration.JwtService;
 import com.telmopanacas.bookedapi.Security.User.Role;
 import com.telmopanacas.bookedapi.Security.User.User;
@@ -35,8 +36,11 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response) {
+        if ( userRepository.findByDisplayName(request.getDisplayName()).isPresent()) {
+            throw new ApiRequestException("Username already in use.");
+        }
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new IllegalStateException("Email já se encontra em uso.");
+            throw new ApiRequestException("Email already in use.");
         }
 
         User user = new User(request.getDisplayName(), request.getEmail(), passwordEncoder.encode(request.getPassword()), Role.USER);
@@ -54,12 +58,16 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        } catch (Exception e) {
+            throw new ApiRequestException(e.getMessage());
+        }
         /*
         Se chegarmos aqui então é porque o authenticate em cima funcionou e o user está autenticado.
          */
@@ -93,7 +101,7 @@ public class AuthenticationService {
         final String refreshToken;
         final String userEmail;
         if( authHeader == null || !authHeader.startsWith("refresh_token=")) {
-            throw new IOException("No Cookie found");
+            throw new ApiRequestException("Cookie with refresh_token not found.");
         }
         refreshToken = authHeader.substring(14);
         userEmail = jwtService.extractUsername(refreshToken);
@@ -101,7 +109,7 @@ public class AuthenticationService {
         // Vamos ver se o userEmail não é null e se o utilizador já se encontra autenticado ou não
         if( userEmail != null ) {
             UserDetails userDetails = userRepository.findByEmail(userEmail).orElseThrow(
-                    () -> new UsernameNotFoundException("User not found while refreshing token")
+                    () -> new UsernameNotFoundException("User not found while refreshing token.")
             );
 
             // Se o token for válido, criamos outro access token
@@ -114,7 +122,7 @@ public class AuthenticationService {
                 new ObjectMapper().writeValue(response.getOutputStream(), authenticationResponse);
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Refresh token expired");
+                response.getWriter().write("Refresh token expired.");
             }
         }
     }

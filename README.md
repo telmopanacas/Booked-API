@@ -22,12 +22,28 @@ Guide for writing change logs.
 ## 2023-09-20
 
 ### Added
-- N/A.
+- Added a custom exception `ApiRequestException` to be used throughout the application.
 
+
+- Added the class `ApiException` to be used as a response in case of an exception.
+
+
+- Added the class `ApiExceptionHandler` to handle the exceptions thrown by the application.
+
+
+- Added the query `findByDisplayName` to the `UserRepository`.
+
+
+- In the function `register` from the `AuthenticationService` added the verification of the user's display name to see if it's already being used.
+
+
+- In the function `authenticate` from the `AuthenticationService` added a `try catch` block to catch the `BadCredentialsException` and throw a `ApiRequestException` instead.
 
 ### Changed
 - In the `AuthenticationService` the function `register` now checks if a user already exists with the same email before creating a new one.
 
+
+- In the `AuthenticationService, AvaliacaoService, ComentarioService, LivroService, UserService` implemented the `ApiRequestException` instead of normal `Exceptions`.
 
 ### Deprecated
 - N/A.

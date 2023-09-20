@@ -1,6 +1,7 @@
 package com.telmopanacas.bookedapi.Services;
 
 import com.telmopanacas.bookedapi.DTOs.UserDTO;
+import com.telmopanacas.bookedapi.Exceptions.ApiRequestException;
 import com.telmopanacas.bookedapi.Mappers.UserDTOMapper;
 import com.telmopanacas.bookedapi.Security.User.UserRepository;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,6 @@ public class UserService {
     public UserDTO getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .map(userDTOMapper)
-                .orElseThrow(() -> new IllegalStateException("Utilizador com email "+ email + " não existe."));
+                .orElseThrow(() -> new ApiRequestException("User with email "+ email + " doesn't exist."));
     }
 }

@@ -1,5 +1,6 @@
 package com.telmopanacas.bookedapi.Services;
 
+import com.telmopanacas.bookedapi.Exceptions.ApiRequestException;
 import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Livro;
 import com.telmopanacas.bookedapi.Repositories.LivroRepository;
@@ -27,7 +28,7 @@ public class LivroService {
     public void addNewLivro(Livro livro) {
         Optional<Livro> livroOptional = livroRepository.findByTituloAndAutor(livro.getTitulo(), livro.getAutor());
         if(livroOptional.isPresent()) {
-            throw new IllegalStateException("Livro com titulo " + livro.getTitulo() + " e autor " + livro.getAutor() + " já existe");
+            throw new ApiRequestException("Book with title " + livro.getTitulo() + " and author " + livro.getAutor() + " already exists.");
         }
         livroRepository.save(livro);
     }
@@ -35,7 +36,7 @@ public class LivroService {
     public Livro getLivro(Long livroId) {
 
         return livroRepository.findById(livroId)
-                .orElseThrow(() -> new IllegalStateException("Livro com id " + livroId + " não existe")
+                .orElseThrow(() -> new ApiRequestException("Book with id " + livroId + " doesn't exist.")
         );
     }
 
@@ -44,13 +45,13 @@ public class LivroService {
         if(exists) {
             livroRepository.deleteById(livroId);
         }else {
-            throw new IllegalStateException("Livro com id " + livroId + " não existe");
+            throw new ApiRequestException("Book with id " + livroId + " doesn't exist.");
         }
     }
 
     public List<Avaliacao> getAllAvaliacoes(Long livroId) {
         Livro livro = livroRepository.findById(livroId)
-                .orElseThrow(() -> new IllegalStateException("Livro com id "+ livroId + " não existe"));
+                .orElseThrow(() -> new ApiRequestException("Book with id "+ livroId + " doesn't exist."));
 
         return livro.getAvaliacoes();
     }
@@ -58,6 +59,6 @@ public class LivroService {
     public Livro findLivroByTitleAndAuthor(String titulo, String autor) {
 
         return livroRepository.findByTituloAndAutor(titulo, autor).
-                orElseThrow(() -> new IllegalStateException("Livro com titulo " + titulo + " e autor " + autor + " não existe"));
+                orElseThrow(() -> new ApiRequestException("Book with title " + titulo + " and author " + autor + " doesn't exist."));
     }
 }
