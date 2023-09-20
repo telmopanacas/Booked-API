@@ -19,6 +19,28 @@ Guide for writing change logs.
 
 `Fixed`  for any bug fixes.
 
+## 2023-09-20
+
+### Added
+- N/A.
+
+
+### Changed
+- In the `AuthenticationService` the function `register` now checks if a user already exists with the same email before creating a new one.
+
+
+### Deprecated
+- N/A.
+
+
+### Removed
+- N/A.
+
+
+### Fixed
+- N/A.
+
+
 ## 2023-09-18
 
 ### Added
