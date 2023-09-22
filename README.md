@@ -19,6 +19,30 @@ Guide for writing change logs.
 
 `Fixed`  for any bug fixes.
 
+## 2023-09-22
+
+### Added
+- N/A.
+
+### Changed
+- In the `AvaliacaoController` added the endpoint `api/v1/avaliacao/search` which receives the parameter `searchInput` and returns the reviews that match the parameter.
+
+
+- In the `AvaliacaoService` added the function `searchAvaliacao` which receives the parameter `searchInput` and returns the reviews that match the parameter.
+
+
+- In the `SecurityConfiguration` added the endpoint `api/v1/avaliacao/search` to the endpoints that don't require authentication.
+
+### Deprecated
+- N/A.
+
+### Removed
+- N/A.
+
+### Fixed
+- N/A.
+
+
 ## 2023-09-20
 
 ### Added

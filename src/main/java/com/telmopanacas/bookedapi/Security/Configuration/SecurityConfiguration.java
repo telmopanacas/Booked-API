@@ -40,7 +40,8 @@ public class SecurityConfiguration {
                 .requestMatchers(
                         "/api/v1/auth/**",
                         "/api/v1/alive",
-                        "api/v1/avaliacao/all"
+                        "api/v1/avaliacao/all",
+                        "api/v1/avaliacao/search"
                 )
                 .permitAll()
                 .anyRequest()

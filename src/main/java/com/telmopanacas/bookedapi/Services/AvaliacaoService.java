@@ -79,4 +79,17 @@ public class AvaliacaoService {
 
         return avaliacao.getComentarios();
     }
+
+    public List<AvaliacaoDTO> searchAvaliacao(String searchInput) {
+        return avaliacaoRepository.findAll()
+                .stream()
+                .filter(
+                        avaliacao -> avaliacao.getTitulo().toLowerCase().contains(searchInput.toLowerCase())
+                        || avaliacao.getLivro().getAutor().toLowerCase().contains(searchInput.toLowerCase())
+                        || avaliacao.getLivro().getTitulo().toLowerCase().contains(searchInput.toLowerCase())
+                        || avaliacao.getUser().getDisplayName().toLowerCase().contains(searchInput.toLowerCase())
+                )
+                .map(avaliacaoDTOMapper)
+                .collect(Collectors.toList());
+    }
 }
