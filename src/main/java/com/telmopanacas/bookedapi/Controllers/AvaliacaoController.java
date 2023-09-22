@@ -55,4 +55,9 @@ public class AvaliacaoController {
     public List<Comentario> getAllComentarios(@PathVariable Long avaliacaoId) {
         return avaliacaoService.getAllComentarios(avaliacaoId);
     }
+
+    @GetMapping("/search")
+    public List<AvaliacaoDTO> findAvalicao(@RequestParam("searchInput") String searchInput) {
+        return avaliacaoService.searchAvaliacao(searchInput);
+    }
 }
