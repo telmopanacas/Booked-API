@@ -45,6 +45,7 @@ public class AvaliacaoDTOMapper implements Function<Avaliacao, AvaliacaoDTO> {
                 avaliacao.getUser().getDisplayName(),
                 avaliacao.getReview(),
                 avaliacao.getRating(),
+                avaliacao.getVotos(),
                 dataFormatada,
                 horaFormatada,
                 avaliacao.getLivro().getTitulo(),

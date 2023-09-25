@@ -6,6 +6,7 @@ public record AvaliacaoDTO (
        String autorAvaliacao,
        String review,
        Integer rating,
+       Integer votos,
        String dataAvaliacao,
        String horaAvaliacao,
        String tituloLivro,

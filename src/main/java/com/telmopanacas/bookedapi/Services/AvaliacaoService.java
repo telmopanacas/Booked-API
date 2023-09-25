@@ -8,6 +8,7 @@ import com.telmopanacas.bookedapi.Models.Comentario;
 import com.telmopanacas.bookedapi.Repositories.AvaliacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +51,8 @@ public class AvaliacaoService {
         }
     }
 
-    public void updateAvaliacao(Long avaliacaoId, String titulo, String review, int rating, int votos) {
+    @Transactional
+    public void updateAvaliacao(Long avaliacaoId, String titulo, String review, Integer  rating, Integer votos) {
         Avaliacao avaliacao = avaliacaoRepository.findById(avaliacaoId)
                 .orElseThrow(() -> new ApiRequestException("Review with id "+ avaliacaoId + " doesn't exist."));
 
@@ -62,11 +64,11 @@ public class AvaliacaoService {
             avaliacao.setReview(review);
         }
 
-        if(rating != avaliacao.getRating()) {
+        if(rating != null && rating != avaliacao.getRating()) {
             avaliacao.setRating(rating);
         }
 
-        if(votos != avaliacao.getVotos()) {
+        if(votos != null && votos != avaliacao.getVotos()) {
             avaliacao.setVotos(votos);
         }
 

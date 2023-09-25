@@ -45,8 +45,8 @@ public class AvaliacaoController {
             @PathVariable("avaliacaoId") Long avaliacaoId,
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) String review,
-            @RequestParam(required = false) int rating,
-            @RequestParam(required = false) int votos
+            @RequestParam(required = false) Integer rating,
+            @RequestParam(required = false) Integer votos
     ) {
         avaliacaoService.updateAvaliacao(avaliacaoId, titulo, review, rating, votos);
     }
