@@ -27,6 +27,22 @@ public class User  implements UserDetails {
     @JsonIgnore
     private List<Avaliacao> avaliacoes = new ArrayList<>();
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "upvoted_avaliacoes",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "avaliacao_id")
+    )
+    private List<Avaliacao> upvotedAvaliacoes = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "downvoted_avaliacoes",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "avaliacao_id")
+    )
+    private List<Avaliacao> downvotedAvaliacoes = new ArrayList<>();
+
     public User(Integer id, String displayName, String email, String password, Role role, List<Avaliacao> avaliacoes) {
         this.id = id;
         this.displayName = displayName;
@@ -92,6 +108,37 @@ public class User  implements UserDetails {
 
     public void setAvaliacoes(List<Avaliacao> avaliacoes) {
         this.avaliacoes = avaliacoes;
+    }
+
+    public List<Avaliacao> getUpvotedAvaliacoes() {
+        return upvotedAvaliacoes;
+    }
+    public void setUpvotedAvaliacoes(List<Avaliacao> upvotedAvaliacoes) {
+        this.upvotedAvaliacoes = upvotedAvaliacoes;
+    }
+
+    public List<Avaliacao> getDownvotedAvaliacoes() {
+        return downvotedAvaliacoes;
+    }
+
+    public void setDownvotedAvaliacoes(List<Avaliacao> downvotedAvaliacoes) {
+        this.downvotedAvaliacoes = downvotedAvaliacoes;
+    }
+
+    public List<Integer> getUpvotedAvaliacoesIds() {
+        List<Integer> upvotedIds = new ArrayList<>();
+        for (Avaliacao avaliacao : this.upvotedAvaliacoes) {
+            upvotedIds.add(avaliacao.getId());
+        }
+        return upvotedIds;
+    }
+
+    public List<Integer> getDownvotedAvaliacoesIds() {
+        List<Integer> downvotedIds = new ArrayList<>();
+        for (Avaliacao avaliacao : this.downvotedAvaliacoes) {
+            downvotedIds.add(avaliacao.getId());
+        }
+        return downvotedIds;
     }
 
     @Override

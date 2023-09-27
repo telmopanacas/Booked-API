@@ -3,6 +3,7 @@ package com.telmopanacas.bookedapi.Controllers;
 import com.telmopanacas.bookedapi.DTOs.AvaliacaoDTO;
 import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Comentario;
+import com.telmopanacas.bookedapi.Models.VoteRequest;
 import com.telmopanacas.bookedapi.Services.AvaliacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,8 +46,8 @@ public class AvaliacaoController {
             @PathVariable("avaliacaoId") Long avaliacaoId,
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) String review,
-            @RequestParam(required = false) int rating,
-            @RequestParam(required = false) int votos
+            @RequestParam(required = false) Integer rating,
+            @RequestParam(required = false) Integer votos
     ) {
         avaliacaoService.updateAvaliacao(avaliacaoId, titulo, review, rating, votos);
     }
@@ -59,5 +60,15 @@ public class AvaliacaoController {
     @GetMapping("/search")
     public List<AvaliacaoDTO> findAvalicao(@RequestParam("searchInput") String searchInput) {
         return avaliacaoService.searchAvaliacao(searchInput);
+    }
+
+    @PostMapping("/upvote")
+    public void upvoteAvaliacao(@RequestBody VoteRequest voteRequest) {
+        avaliacaoService.upvoteAvaliacao(voteRequest);
+    }
+
+    @PostMapping("/downvote")
+    public void downvoteAvaliacao(@RequestBody VoteRequest voteRequest) {
+        avaliacaoService.downvoteAvaliacao(voteRequest);
     }
 }
