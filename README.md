@@ -19,6 +19,38 @@ Guide for writing change logs.
 
 `Fixed`  for any bug fixes.
 
+## 2023-09-27
+
+### Added
+- Added the class `VoteRequest` to be used in the `AvaliacaoController` to receive the vote data from the frontend.
+
+### Changed
+- In the `AvaliacaoController` added the endpoints `api/v1/avaliacao/upvote` and `api/v1/avaliacao/downvote` which receive a `VoteRequest` and updates `User's` `upvotedReviews` or `downvotedReviews` fields.
+
+
+- In the `AvaliacaoService` added the functions `upvoteAvaliacao` and `downvoteAvaliacao` which receive a `VoteRequest` and updates `User's` `upvotedReviews` or `downvotedReviews` fields.
+
+
+- In the `User` entity added the `upvotedReviews` and `downvotedReviews` properties and created a `ManyToMany` relation between `User` and `Avaliacao`.
+
+
+- In the `UserController` added the endpoint `api/v1/user/{userId}/upvoted` which returns a list of `AvaliacaoDTO`.
+
+
+- In the `UserController` added the endpoint `api/v1/user/{userId}/downvoted` which returns a list of `AvaliacaoDTO`.
+
+
+- In the `UserService` added the functions `getUpvotedReviews` and `getDownvotedReviews` which return a list of `AvaliacaoDTO`.
+
+### Deprecated
+- N/A.
+
+### Removed
+- N/A.
+
+### Fixed
+- N/A.
+
 ## 2023-09-22
 
 ### Added

@@ -5,7 +5,10 @@ import com.telmopanacas.bookedapi.Exceptions.ApiRequestException;
 import com.telmopanacas.bookedapi.Mappers.AvaliacaoDTOMapper;
 import com.telmopanacas.bookedapi.Models.Avaliacao;
 import com.telmopanacas.bookedapi.Models.Comentario;
+import com.telmopanacas.bookedapi.Models.VoteRequest;
 import com.telmopanacas.bookedapi.Repositories.AvaliacaoRepository;
+import com.telmopanacas.bookedapi.Security.User.User;
+import com.telmopanacas.bookedapi.Security.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +21,12 @@ public class AvaliacaoService {
 
 
     private final AvaliacaoRepository avaliacaoRepository;
+    private final UserRepository userRepository;
     private final AvaliacaoDTOMapper avaliacaoDTOMapper;
     @Autowired
-    public AvaliacaoService(AvaliacaoRepository avaliacaoRepository, AvaliacaoDTOMapper avaliacaoDTOMapper) {
+    public AvaliacaoService(AvaliacaoRepository avaliacaoRepository, UserRepository userRepository, AvaliacaoDTOMapper avaliacaoDTOMapper) {
         this.avaliacaoRepository = avaliacaoRepository;
+        this.userRepository = userRepository;
         this.avaliacaoDTOMapper = avaliacaoDTOMapper;
     }
 
@@ -93,5 +98,52 @@ public class AvaliacaoService {
                 )
                 .map(avaliacaoDTOMapper)
                 .collect(Collectors.toList());
+    }
+
+    public void upvoteAvaliacao(VoteRequest voteRequest) {
+        Integer userId = voteRequest.getUserId();
+        Integer avaliacaoId = voteRequest.getAvaliacaoId();
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiRequestException("User with id " + userId + " doesn't exist."));
+        Avaliacao avaliacao = avaliacaoRepository.findById(Long.valueOf(avaliacaoId))
+                .orElseThrow(() -> new ApiRequestException("Avaliacao with id " + avaliacaoId + " doesn't exist."));
+
+        if ( user.getUpvotedAvaliacoesIds().contains(avaliacaoId) ) {
+            user.getUpvotedAvaliacoes().remove(avaliacao);
+            avaliacao.setVotos(avaliacao.getVotos() - 1);
+            userRepository.save(user);
+            avaliacaoRepository.save(avaliacao);
+            return;
+        }
+
+        user.getDownvotedAvaliacoes().remove(avaliacao);
+        user.getUpvotedAvaliacoes().add(avaliacao);
+        avaliacao.setVotos(avaliacao.getVotos() + 1);
+        userRepository.save(user);
+        avaliacaoRepository.save(avaliacao);
+    }
+
+    public void downvoteAvaliacao(VoteRequest voteRequest) {
+        Integer userId = voteRequest.getUserId();
+        Integer avaliacaoId = voteRequest.getAvaliacaoId();
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiRequestException("User with id " + userId + " doesn't exist."));
+        Avaliacao avaliacao = avaliacaoRepository.findById(Long.valueOf(avaliacaoId))
+                .orElseThrow(() -> new ApiRequestException("Avaliacao with id " + avaliacaoId + " doesn't exist."));
+
+        if ( user.getDownvotedAvaliacoesIds().contains(avaliacaoId) ) {
+            user.getDownvotedAvaliacoes().remove(avaliacao);
+            avaliacao.setVotos(avaliacao.getVotos() + 1);
+            userRepository.save(user);
+            avaliacaoRepository.save(avaliacao);
+            return;
+        }
+        user.getUpvotedAvaliacoes().remove(avaliacao);
+        user.getDownvotedAvaliacoes().add(avaliacao);
+        avaliacao.setVotos(avaliacao.getVotos() - 1);
+        userRepository.save(user);
+        avaliacaoRepository.save(avaliacao);
     }
 }
